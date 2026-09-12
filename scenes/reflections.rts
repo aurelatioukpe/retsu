@@ -1,0 +1,120 @@
+# Recursive reflection.
+#
+# Two large mirrors face each other across a matte subject, so each one carries
+# the other's image, which carries the first again. Raising --depth adds a
+# generation to that nesting; lowering it to 1 removes reflection entirely and
+# leaves the scene as a ray caster would render it.
+#
+#   ./retsu scenes/reflections.rts -s 2 -d 1     no reflection
+#   ./retsu scenes/reflections.rts -s 2 -d 2     one bounce
+#   ./retsu scenes/reflections.rts -s 2 -d 8     the corridor
+#
+# Coordinates: the camera basis is u = up x (-direction), so with the camera
+# looking toward +z, increasing x moves LEFT across the frame.
+
+[Camera]
+position = 0, 1.1, -7.2
+lookAt = 0, 0.35, 0.6
+up = 0, 1, 0
+fov = 48
+aspectRatio = 1.777
+resolution = 1600, 900
+
+# --- the set --------------------------------------------------------------
+
+[Plane]
+point = 0, -1, 0
+normal = 0, 1, 0
+color = 0.30, 0.31, 0.35
+reflectivity = 0.50
+
+[Plane]
+point = 0, 0, 7.5
+normal = 0, 0, -1
+color = 0.34, 0.30, 0.38
+reflectivity = 0.0
+
+# The room is closed on all six sides. Without it the mirrors would spend most
+# of their surface reflecting the background, which is simply black: a mirror
+# is only as interesting as what stands in front of it.
+[Plane]
+point = 0, 6.5, 0
+normal = 0, -1, 0
+color = 0.62, 0.62, 0.66
+reflectivity = 0.0
+
+[Plane]
+point = 0, 0, -9.5
+normal = 0, 0, 1
+color = 0.30, 0.34, 0.42
+reflectivity = 0.0
+
+[Plane]
+point = -7.5, 0, 0
+normal = 1, 0, 0
+color = 0.52, 0.34, 0.32
+reflectivity = 0.0
+
+[Plane]
+point = 7.5, 0, 0
+normal = -1, 0, 0
+color = 0.32, 0.44, 0.40
+reflectivity = 0.0
+
+# --- the two mirrors ------------------------------------------------------
+
+[Sphere]
+center = -2.6, 0.35, 1.0
+radius = 1.35
+color = 0.94, 0.95, 0.98
+reflectivity = 0.90
+
+[Sphere]
+center = 2.6, 0.35, 1.0
+radius = 1.35
+color = 0.94, 0.95, 0.98
+reflectivity = 0.90
+
+# --- the subject between them ---------------------------------------------
+
+# Matte, saturated, and centred: it is the thing you follow from one mirror
+# into the next.
+[Sphere]
+center = 0, -0.25, 0.9
+radius = 0.75
+color = 0.88, 0.22, 0.20
+reflectivity = 0.0
+
+# Two small accents that also multiply down the corridor.
+[Sphere]
+center = -0.95, -0.76, -1.5
+radius = 0.24
+color = 0.96, 0.76, 0.22
+reflectivity = 0.15
+
+[Sphere]
+center = 0.95, -0.76, -1.5
+radius = 0.24
+color = 0.22, 0.70, 0.42
+reflectivity = 0.15
+
+# --- light ----------------------------------------------------------------
+
+[AmbientLight]
+intensity = 0.20
+color = 0.90, 0.93, 1.0
+
+[PointLight]
+position = 0, 4.6, -3.5
+intensity = 0.80
+color = 1.0, 0.95, 0.88
+
+[PointLight]
+position = -4.5, 2.5, -2.5
+intensity = 0.35
+color = 0.80, 0.88, 1.0
+
+[PointLight]
+position = 4.5, 2.5, -2.5
+intensity = 0.35
+color = 1.0, 0.88, 0.80

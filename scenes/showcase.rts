@@ -1,0 +1,120 @@
+# Showcase scene.
+#
+# An enclosed set rather than a plane floating in black. The floor and a back
+# wall give the reflections something to carry and bounce light into the
+# shadows instead of leaving them flat.
+#
+# Note on coordinates: the camera basis is built as u = up x (-direction), so
+# with the camera looking toward +z, increasing x moves LEFT across the frame.
+# Every placement below is written with that in mind.
+
+[Camera]
+position = 0.4, 2.6, -8.5
+lookAt = 0.1, 0.1, 1.2
+up = 0, 1, 0
+fov = 50
+aspectRatio = 1.777
+resolution = 1600, 900
+
+# --- the set --------------------------------------------------------------
+
+# Floor. Reflective enough to double the subjects without stealing the frame.
+[Plane]
+point = 0, -1, 0
+normal = 0, 1, 0
+color = 0.40, 0.41, 0.46
+reflectivity = 0.42
+
+# Back wall, warm, so the silhouettes have something to stand against.
+[Plane]
+point = 0, 0, 8
+normal = 0, 0, -1
+color = 0.56, 0.48, 0.42
+reflectivity = 0.0
+
+# --- subjects, from screen-right to screen-left ----------------------------
+
+# Cone, far screen-right, rear. Lit by the warm key.
+[Cone]
+apex = -4.0, 1.55, 3.4
+axis = 0, -1, 0
+angle = 19
+height = 2.55
+color = 0.80, 0.58, 0.26
+reflectivity = 0.12
+
+# Small mirror, screen-right and forward, catching the red sphere close up.
+[Sphere]
+center = -2.5, -0.42, -1.2
+radius = 0.58
+color = 0.90, 0.92, 0.96
+reflectivity = 0.78
+
+# Green accent, nearest the camera, sets the foreground depth.
+[Sphere]
+center = -1.15, -0.74, -2.6
+radius = 0.26
+color = 0.22, 0.64, 0.36
+reflectivity = 0.22
+
+# Matte centrepiece, slightly screen-right of centre. Deliberately not
+# reflective: the eye needs one surface that is simply itself.
+[Sphere]
+center = -0.35, 0.0, 0.9
+radius = 1.0
+color = 0.84, 0.25, 0.22
+reflectivity = 0.0
+
+# Gold accent, mid-depth, screen-left of the hero.
+[Sphere]
+center = 1.2, -0.70, -0.4
+radius = 0.30
+color = 0.94, 0.72, 0.24
+reflectivity = 0.22
+
+# Large mirror sphere, screen-left and set back. Carries most of the scene.
+[Sphere]
+center = 2.75, 0.35, 3.1
+radius = 1.35
+color = 0.92, 0.93, 0.96
+reflectivity = 0.84
+
+# Capped cylinder, far screen-left, framing the composition.
+[Cylinder]
+basePoint = 4.6, -1, 0.9
+axis = 0, 1, 0
+radius = 0.44
+height = 2.1
+color = 0.28, 0.50, 0.72
+reflectivity = 0.22
+
+# --- light ----------------------------------------------------------------
+
+[AmbientLight]
+intensity = 0.24
+color = 0.92, 0.94, 1.0
+
+# Warm key, high, screen-right, in front. Casts the main shadows toward the
+# camera and lights the cone and the small mirror.
+[PointLight]
+position = -5.5, 6.5, -4.5
+intensity = 0.90
+color = 1.0, 0.94, 0.83
+
+# Cool fill from the opposite side, lifting the shadow side without
+# flattening the modelling.
+[PointLight]
+position = 6.0, 3.2, -2.0
+intensity = 0.42
+color = 0.76, 0.85, 1.0
+
+# Rim light behind the subjects, separating them from the back wall.
+[PointLight]
+position = 0.5, 4.5, 6.5
+intensity = 0.38
+color = 1.0, 0.91, 0.80
+
+[DirectionalLight]
+direction = 0.3, -1, 0.4
+intensity = 0.16
+color = 0.95, 0.95, 1.0

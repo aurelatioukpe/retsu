@@ -1,0 +1,16 @@
+# Build
+build/
+retsu
+*.o
+*.d
+
+# Rendered output. The PNGs under docs/images are tracked on purpose —
+# they are what the README shows.
+*.ppm
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
